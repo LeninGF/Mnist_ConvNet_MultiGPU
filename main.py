@@ -11,6 +11,9 @@ import os
 ytrain = to_categorical(ytrain)
 ytest = to_categorical(ytest)
 
+xtrain = xtrain.reshape(-1,28,28,1)/255.0
+xtest = xtest.reshape(-1,28,28,1)/255.0
+
 model = Sequential()
 model.add(Conv2D(64,3,activation='relu',input_shape=(28,28,1)))
 model.add(Conv2D(32,3,activation='relu'))
