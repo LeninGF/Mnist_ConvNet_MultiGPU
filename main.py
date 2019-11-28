@@ -25,8 +25,8 @@ model_multiple = multi_gpu_model(model, gpus=2, cpu_relocation=True)
 model_multiple.compile(optimizer=RMSprop(lr=1e-5), loss='categorical_crossentropy', metrics=['acc'])
 history = model_multiple.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20)
 
-path_to_save_multi_gpu = os.path.join(os.getcwd(),'models/multi_gpu_model')
-path_to_save_single_model = os.path.join(os.getcwd(), 'models/single_model')
+path_to_save_multi_gpu = os.path.join(os.getcwd(),'models/multi_gpu_model', 'multigpu.h5')
+path_to_save_single_model = os.path.join(os.getcwd(), 'models/single_model', 'single.h5')
 
 model_multiple.save(filepath=path_to_save_multi_gpu)
 model.save(filepath=path_to_save_single_model)
