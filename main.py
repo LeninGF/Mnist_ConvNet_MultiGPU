@@ -31,15 +31,14 @@ path_to_save_single_model = os.path.join(os.getcwd(), 'models/single_model', 'si
 model_multiple.save(filepath=path_to_save_multi_gpu)
 model.save(filepath=path_to_save_single_model)
 
-read_single_model = load_model(filepath=path_to_save_single_model)
-read_single_model.summary()
-print('single model opened')
-loss, acc = read_single_model.evaluate(xtest,ytest,verbose=2)
-
 read_multi_model = load_model(filepath=path_to_save_multi_gpu)
 read_multi_model.summary()
 print('multi gpu model opened')
 loss, acc = read_multi_model.evaluate(xtest, ytest, verbose=2)
 
+read_single_model = load_model(filepath=path_to_save_single_model)
+read_single_model.summary()
+print('single model opened')
+loss, acc = read_single_model.evaluate(xtest,ytest,verbose=2)
 
 
