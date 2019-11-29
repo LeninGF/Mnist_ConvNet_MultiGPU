@@ -10,7 +10,7 @@ xtest = xtest.reshape(-1,28,28,1)/255.0
 dir_root = os.getcwd()
 path_model = os.path.join(dir_root, 'models/multi_gpu_model/multigpu.h5')
 
-mnist_model = load_model()
+mnist_model = load_model(filepath=path_model)
 print(mnist_model.summary())
 loss, acc = mnist_model.evaluate(xtest,ytest,verbose=2)
 
