@@ -10,6 +10,9 @@ import time
 import pathlib
 
 dir_root = os.getcwd()
+dir_to_save_models = os.path.join(dir_root, 'models')
+pathlib.Path(dir_to_save_models).mkdir(parents=True, exist_ok=True)
+
 (xtrain, ytrain), (xtest, ytest) = mnist.load_data()
 ytrain = to_categorical(ytrain)
 ytest = to_categorical(ytest)
@@ -33,9 +36,7 @@ history = model_multiple.fit(xtrain, ytrain, validation_data=(xtest, ytest), epo
 time_end = time.time()
 print('Evaluating Model...')
 loss, acc = model_multiple.evaluate(xtest, ytest, verbose=2)
-dir_to_save_multi_gpu = os.path.join(dir_root, 'models/multi_gpu_model')
-pathlib.Path(dir_to_save_multi_gpu).mkdir(parents=True, exist_ok=True)
-path_to_save_multigpu_model = os.path.join(dir_to_save_multi_gpu, 'multigpu.h5')
+path_to_save_multigpu_model = os.path.join(dir_to_save_models, 'multigpu.h5')
 model_multiple.save(filepath=path_to_save_multigpu_model)
 print('Model training took {} seconds \nModel saved to {}'.format(time_end-time_start, path_to_save_multigpu_model))
 
@@ -46,9 +47,7 @@ history_single = model.fit(xtrain, ytrain, validation_data=(xtest, ytest), epoch
 time_end = time.time()
 print('Evaluating Model...')
 loss, acc = model.evaluate(xtest, ytest, verbose=2)
-dir_to_save_single_model = os.path.join(dir_root, 'models/single_model')
-pathlib.Path(dir_to_save_single_model).mkdir(parents=True, exist_ok=True)
-path_to_save_single_model = os.path.join(dir_to_save_single_model, 'singlegpu.h5')
+path_to_save_single_model = os.path.join(dir_to_save_models, 'singlegpu.h5')
 model.save(filepath=path_to_save_single_model)
 print('Model training took {} seconds \nModel saved to {}'.format(time_end-time_start, path_to_save_single_model))
 
