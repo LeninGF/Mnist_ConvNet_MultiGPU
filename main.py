@@ -6,6 +6,7 @@ from tensorflow._api.v1.keras.models import load_model
 from tensorflow._api.v1.keras.optimizers import RMSprop
 from tensorflow._api.v1.keras.utils import multi_gpu_model
 import os
+import time
 
 (xtrain, ytrain), (xtest, ytest) = mnist.load_data()
 ytrain = to_categorical(ytrain)
@@ -23,19 +24,28 @@ model.summary()
 
 model_multiple = multi_gpu_model(model, gpus=2, cpu_relocation=True)
 model_multiple.compile(optimizer=RMSprop(lr=1e-5), loss='categorical_crossentropy', metrics=['acc'])
+
+print('Training on Multiple GPU ...')
+time_start = time.time()
 history = model_multiple.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20)
-
+time_end = time.time()
 path_to_save_multi_gpu = os.path.join(os.getcwd(), 'models/multi_gpu_model', 'multigpu.h5')
-path_to_save_single_model = os.path.join(os.getcwd(), 'models/single_model', 'single.h5')
-
 model_multiple.save(filepath=path_to_save_multi_gpu)
-model.save(filepath=path_to_save_single_model)
+print('Model training took {} seconds \nModel saved to {}'.format(time_end-time_start, path_to_save_multi_gpu))
 
-read_multi_model = load_model(filepath=path_to_save_multi_gpu)
-read_multi_model.summary()
-print('multi gpu model opened')
-read_multi_model.compile(optimizer=RMSprop(lr=1e-5), loss='categorical_crossentropy', metrics=['acc'])
-loss, acc = read_multi_model.evaluate(xtest, ytest, verbose=2)
+print('Training on Single GPU')
+time_start = time.time()
+history_single = model.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20)
+time_end = time.time()
+path_to_save_single_model = os.path.join(os.getcwd(), 'models/single_model', 'single.h5')
+model.save(filepath=path_to_save_single_model)
+print('Model training took {} seconds \nModel saved to {}'.format(time_end-time_start, path_to_save_single_model))
+
+# read_multi_model = load_model(filepath=path_to_save_multi_gpu)
+# read_multi_model.summary()
+# print('multi gpu model opened')
+# read_multi_model.compile(optimizer=RMSprop(lr=1e-5), loss='categorical_crossentropy', metrics=['acc'])
+# loss, acc = read_multi_model.evaluate(xtest, ytest, verbose=2)
 
 print('training finished')
 # read_single_model = load_model(filepath=path_to_save_single_model)

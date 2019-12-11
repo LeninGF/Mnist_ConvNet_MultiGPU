@@ -8,6 +8,7 @@
 #SBATCH --qos=extended
 
 echo 'Training Mnist with 2 GPUS'
+echo 'The script first trains mnist on 2 GPUs, then it trains it on single gpu'
 start=$(date +'%s')
 python main.py
 end=$(date +'%s')
