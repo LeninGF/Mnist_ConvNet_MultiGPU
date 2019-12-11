@@ -7,6 +7,7 @@ from tensorflow._api.v1.keras.optimizers import RMSprop
 from tensorflow._api.v1.keras.utils import multi_gpu_model
 import os
 import time
+import pathlib
 
 (xtrain, ytrain), (xtest, ytest) = mnist.load_data()
 ytrain = to_categorical(ytrain)
@@ -30,6 +31,7 @@ time_start = time.time()
 history = model_multiple.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20)
 time_end = time.time()
 path_to_save_multi_gpu = os.path.join(os.getcwd(), 'models/multi_gpu_model', 'multigpu.h5')
+pathlib.Path(path_to_save_multi_gpu).mkdir(parents=True, exist_ok=True)
 model_multiple.save(filepath=path_to_save_multi_gpu)
 print('Model training took {} seconds \nModel saved to {}'.format(time_end-time_start, path_to_save_multi_gpu))
 
@@ -38,6 +40,7 @@ time_start = time.time()
 history_single = model.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20)
 time_end = time.time()
 path_to_save_single_model = os.path.join(os.getcwd(), 'models/single_model', 'single.h5')
+pathlib.Path(path_to_save_single_model).mkdir(parents=True, exist_ok=True)
 model.save(filepath=path_to_save_single_model)
 print('Model training took {} seconds \nModel saved to {}'.format(time_end-time_start, path_to_save_single_model))
 
