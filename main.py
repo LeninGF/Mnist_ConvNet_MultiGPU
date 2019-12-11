@@ -28,7 +28,7 @@ model_multiple.compile(optimizer=RMSprop(lr=1e-5), loss='categorical_crossentrop
 
 print('Training on Multiple GPU ...')
 time_start = time.time()
-history = model_multiple.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20)
+history = model_multiple.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20, workers=28)
 time_end = time.time()
 loss, acc = model_multiple.evaluate(xtest, ytest, verbose=2)
 dir_to_save_multi_gpu = os.path.join(os.getcwd(), 'models/multi_gpu_model')
@@ -40,7 +40,7 @@ print('Model training took {} seconds \nModel saved to {}'.format(time_end-time_
 print('Training on Single GPU')
 model.compile(optimizer=RMSprop(lr=1e-5), loss='categorical_crossentropy', metrics=['acc'])
 time_start = time.time()
-history_single = model.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20)
+history_single = model.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20, workers=28)
 time_end = time.time()
 loss, acc = model.evaluate(xtest, ytest, verbose=2)
 dir_to_save_single_model = os.path.join(os.getcwd(), 'models/single_model')
