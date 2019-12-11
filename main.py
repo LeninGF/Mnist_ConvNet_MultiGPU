@@ -11,12 +11,12 @@ import os
 ytrain = to_categorical(ytrain)
 ytest = to_categorical(ytest)
 
-xtrain = xtrain.reshape(-1,28,28,1)/255.0
-xtest = xtest.reshape(-1,28,28,1)/255.0
+xtrain = xtrain.reshape(-1, 28, 28, 1)/255.0
+xtest = xtest.reshape(-1, 28, 28, 1)/255.0
 
 model = Sequential()
-model.add(Conv2D(64,3,activation='relu',input_shape=(28,28,1)))
-model.add(Conv2D(32,3,activation='relu'))
+model.add(Conv2D(64, 3, activation='relu', input_shape=(28, 28, 1)))
+model.add(Conv2D(32, 3, activation='relu'))
 model.add(Flatten())
 model.add(Dense(10, activation='softmax'))
 model.summary()
@@ -25,7 +25,7 @@ model_multiple = multi_gpu_model(model, gpus=2, cpu_relocation=True)
 model_multiple.compile(optimizer=RMSprop(lr=1e-5), loss='categorical_crossentropy', metrics=['acc'])
 history = model_multiple.fit(xtrain, ytrain, validation_data=(xtest, ytest), epochs=20)
 
-path_to_save_multi_gpu = os.path.join(os.getcwd(),'models/multi_gpu_model', 'multigpu.h5')
+path_to_save_multi_gpu = os.path.join(os.getcwd(), 'models/multi_gpu_model', 'multigpu.h5')
 path_to_save_single_model = os.path.join(os.getcwd(), 'models/single_model', 'single.h5')
 
 model_multiple.save(filepath=path_to_save_multi_gpu)
