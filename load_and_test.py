@@ -2,6 +2,11 @@ import os
 from tensorflow._api.v1.keras.models import load_model
 from tensorflow._api.v1.keras.datasets import mnist
 from tensorflow._api.v1.keras.utils import to_categorical
+import tensorflow as tf
+
+# config = tf.ConfigProto()
+# config.gpu_options.allow_growth = True
+# tf.keras.backend.set_session(tf.Session(config=config))
 
 (xtrain, ytrain), (xtest, ytest) = mnist.load_data()
 ytest = to_categorical(ytest)
