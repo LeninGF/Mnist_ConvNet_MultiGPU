@@ -8,11 +8,23 @@ ytest = to_categorical(ytest)
 xtest = xtest.reshape(-1,28,28,1)/255.0
 
 dir_root = os.getcwd()
-path_model = os.path.join(dir_root, 'models/multi_gpu_model/multigpu.h5')
+path_multigpu_model = os.path.join(dir_root, 'models/multigpu.h5')
 
-mnist_model = load_model(filepath=path_model)
-print(mnist_model.summary())
-loss, acc = mnist_model.evaluate(xtest,ytest,verbose=2)
+mnist_mgpu = load_model(filepath=path_multigpu_model)
+print(mnist_mgpu.summary())
+loss, acc = mnist_mgpu.evaluate(xtest, ytest, verbose=2)
 
 print('loss: {} acc: {}'.format(loss, acc))
+
+path_single_model = os.path.join(dir_root, 'models/singlegpu.h5')
+
+mnist_sgpu = load_model(filepath=path_single_model)
+print(mnist_sgpu.summary())
+loss, acc = mnist_sgpu.evaluate(xtest, ytest, verbose=2)
+
+print('loss: {} acc: {}'.format(loss, acc))
+
+
+
+
 
