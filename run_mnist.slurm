@@ -4,7 +4,7 @@
 #SBATCH -n 28
 #SBATCH --gres=gpu:2
 #SBATCH -p quinde-G9-2680
-#SBATCH -w apollo-2
+#SBATCH -w apollo-1
 #SBATCH --qos=extended
 
 echo 'Training Mnist with 2 GPUS'
