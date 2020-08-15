@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#SBATCH -J WR-Inb
+#SBATCH -J Mnist
 #SBATCH -n 28
 #SBATCH --gres=gpu:1
 #SBATCH -p quinde-G9-2680
 #SBATCH -w apollo-1
-#SBATCH --qos=extended
+#SBATCH --qos=extended_prio
 
 echo 'Loading models and evaluate performance'
 start=$(date +'%s')
